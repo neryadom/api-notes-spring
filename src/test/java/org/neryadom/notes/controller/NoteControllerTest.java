@@ -11,14 +11,25 @@ import org.neryadom.notes.service.NoteService;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class NoteControllerTest {
 
+    public NoteDao mockNoteDao;
+    public NoteService testNoteService;
+    public NoteController testNoteController;
+
+    public List<Note> sampleData = List.of(
+            new Note("Example Note", "Today is a good day"),
+            new Note("No Content, just title"),
+            new Note("Moving state out of a component into a file", "More to come..."),
+            new Note("My takeaway from a few months of working at the university", "A lot of learning...")
+    );
+
     @BeforeEach
     void setUp() {
+        mockNoteDao = Mockito.mock(NoteDao.class) ;
+        testNoteService = new NoteService(mockNoteDao);
+        testNoteController = new NoteController(testNoteService);
     }
 
     @AfterEach
@@ -26,17 +37,39 @@ class NoteControllerTest {
     }
 
     @Test
-    void getNotes() {
+    void getOneNoteReturnsFirstNote() {
         // arrange
-        NoteDao mockNoteDao = Mockito.mock(NoteDao.class) ;
-        NoteService mockNoteService = new NoteService(mockNoteDao);
-        NoteController mockNoteController = new NoteController(mockNoteService);
-        Note testNote = new Note("Example Note", "Today is a good day");
+        Note testNote = sampleData.getFirst();
         List<Note> testNoteList = List.of(testNote);
-        Mockito.when(mockNoteDao.getNotes(anyInt())).thenReturn(testNoteList);
+        Mockito.when(mockNoteDao.getNotes(1)).thenReturn(testNoteList);
         // act
-        List<Note> result = mockNoteController.getNotes(1);
+        List<Note> result = testNoteController.getNotes(1);
         // assert
         assertEquals(result, testNoteList);
+    }
+
+    @Test
+    void getOneNoteReturnsOneNote() {
+        // arrange
+        Note testNote = sampleData.getFirst();
+        List<Note> testNoteList = List.of(testNote);
+        Mockito.when(mockNoteDao.getNotes(1)).thenReturn(testNoteList);
+        // act
+        List<Note> result = testNoteController.getNotes(1);
+        // assert
+        assertEquals(1, testNoteList.size());
+    }
+
+    @Test
+    void getTwoNotesReturnsTwoNotes() {
+        Note testNoteOne = sampleData.get(0);
+        Note testNoteTwo = sampleData.get(1);
+        List<Note> testNoteList = List.of(testNoteOne, testNoteTwo);
+        // arrange
+        Mockito.when(mockNoteDao.getNotes(2)).thenReturn(testNoteList);
+        // act
+        List<Note> result = testNoteController.getNotes(2);
+        // assert
+        assertEquals(2, result.size());
     }
 }

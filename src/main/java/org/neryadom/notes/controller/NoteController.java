@@ -21,21 +21,17 @@ public class NoteController implements NoteControllerInterface {
     }
 
     @Override
-    public List<Note> getNotes(String title, Integer quantity) {
+    public List<Note> getNotes(String title, Integer quantity, String caseSensitive) {
         List<Note> output;
-        if (title == null) {
-            log.info("getNotes with all titles and with quantity: {}", quantity);
-            return noteService.getNotes(quantity);
-        }
-        output = noteService.getNotesByTitle(title);
-        log.info("getNotes with title: {} and with quantity: {}", title, quantity);
-        return output.subList(0, Math.min(quantity, output.size()));
+        output = noteService.getNotes(title, quantity, caseSensitive);
+        log.info("getNotes called with case sensitivity: {} and with quantity: {}", caseSensitive, quantity);
+        return output;
     }
 
     @Override
-    public List<Note> getNotesByTitle(String title) {
+    public List<Note> getNotesByTitle(String title, String caseSensitive) {
         List<Note> output;
-        output = noteService.getNotesByTitle(title);
+        output = noteService.getNotesByTitle(title, caseSensitive);
         log.info("getNotesByTitle with title: {}", title);
         return output;
     }

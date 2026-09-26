@@ -10,8 +10,10 @@ public interface NoteControllerInterface {
 
     @GetMapping
     List<Note> getNotes(@RequestParam(required=false) String title,
-                        @RequestParam(required=false, defaultValue="10") Integer quantity);
+                        @RequestParam(required=false, defaultValue="10") Integer quantity,
+                        @RequestParam(required=false, defaultValue="true") String caseSensitive);
 
     @GetMapping("/title")
-    List<Note> getNotesByTitle(@RequestParam() String title);
+    List<Note> getNotesByTitle(@RequestParam() String title,
+                               @RequestParam(required = false, defaultValue = "true") String caseSensitive);
 }

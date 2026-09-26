@@ -28,14 +28,14 @@ public class NoteDao {
         return this.storage.subList(0, Math.min(quantity, this.storage.size()));
     }
 
-    public List<Note> getNotesByTitle(String title) {
+    public List<Note> getNotesByTitle(String title, boolean caseSensitivity) {
         ArrayList<Note> output = new ArrayList<>();
         for (Note n: this.storage) {
-            if (n.getTitle().contains(title)) {
+            if (n.getTitle().contains(title) || (!caseSensitivity && n.getTitle().toLowerCase().contains(title))) {
                 output.add(n);
             }
         }
-        if (output.isEmpty()) throw new NoteNotFoundException("Could not find notes for title" + title);
+        if (output.isEmpty()) throw new NoteNotFoundException("Could not find notes for title: " + title);
         return output;
     }
 }

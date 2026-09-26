@@ -43,7 +43,7 @@ class NoteControllerTest {
         List<Note> testNoteList = List.of(testNote);
         Mockito.when(mockNoteDao.getNotes(1)).thenReturn(testNoteList);
         // act
-        List<Note> result = testNoteController.getNotes("",1);
+        List<Note> result = testNoteController.getNotes("",1, "false");
         // assert
         assertEquals(result, testNoteList);
     }
@@ -55,7 +55,7 @@ class NoteControllerTest {
         List<Note> testNoteList = List.of(testNote);
         Mockito.when(mockNoteDao.getNotes(1)).thenReturn(testNoteList);
         // act
-        List<Note> result = testNoteController.getNotes("", 1);
+        List<Note> result = testNoteController.getNotes("", 1, "false");
         // assert
         assertEquals(1, testNoteList.size());
     }
@@ -68,7 +68,7 @@ class NoteControllerTest {
         // arrange
         Mockito.when(mockNoteDao.getNotes(2)).thenReturn(testNoteList);
         // act
-        List<Note> result = testNoteController.getNotes("", 2);
+        List<Note> result = testNoteController.getNotes("", 2, "false");
         // assert
         assertEquals(2, result.size());
     }

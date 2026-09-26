@@ -1,5 +1,6 @@
 package org.neryadom.notes.dao;
 
+import org.neryadom.notes.exception.NoteNotFoundException;
 import org.neryadom.notes.model.Note;
 import org.springframework.stereotype.Component;
 
@@ -25,5 +26,16 @@ public class NoteDao {
 
     public List<Note> getNotes(Integer quantity) {
         return this.storage.subList(0, Math.min(quantity, this.storage.size()));
+    }
+
+    public List<Note> getNotesByTitle(String title) {
+        ArrayList<Note> output = new ArrayList<>();
+        for (Note n: this.storage) {
+            if (n.getTitle().contains(title)) {
+                output.add(n);
+            }
+        }
+        if (output.isEmpty()) throw new NoteNotFoundException("Could not find notes for title" + title);
+        return output;
     }
 }

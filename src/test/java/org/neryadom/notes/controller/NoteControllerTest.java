@@ -27,7 +27,7 @@ class NoteControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockNoteDao = Mockito.mock(NoteDao.class) ;
+        mockNoteDao = Mockito.mock(NoteDao.class);
         testNoteService = new NoteService(mockNoteDao);
         testNoteController = new NoteController(testNoteService);
     }

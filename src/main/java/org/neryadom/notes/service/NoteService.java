@@ -17,7 +17,8 @@ public class NoteService {
         this.noteDao = noteDao;
     }
 
-    public List<Note> getNotes(Integer quantity) {
+    public List<Note> getNotes(Integer quantity) throws Exception {
+        if (quantity == 1) throw new Exception("hi");
         return noteDao.getNotes(quantity);
     }
 }

@@ -19,6 +19,12 @@ public class NoteController implements NoteControllerInterface {
 
     @Override
     public List<Note> getNotes(Integer quantity) {
-        return noteService.getNotes(quantity);
+        List<Note> output;
+        try {
+            output = noteService.getNotes(quantity);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return output;
     }
 }

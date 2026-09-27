@@ -24,7 +24,7 @@ public class NoteController implements NoteControllerInterface {
     public List<Note> getNotes(String title, Integer quantity, String caseSensitive) {
         List<Note> output;
         output = noteService.getNotes(title, quantity, caseSensitive);
-        log.info("getNotes called with case sensitivity: {} and with quantity: {}", caseSensitive, quantity);
+        log.info("getNotes controller called with case: {}", caseSensitive);
         return output;
     }
 
@@ -32,7 +32,7 @@ public class NoteController implements NoteControllerInterface {
     public List<Note> getNotesByTitle(String title, String caseSensitive) {
         List<Note> output;
         output = noteService.getNotesByTitle(title, caseSensitive);
-        log.info("getNotesByTitle with title: {}", title);
+        log.info("getNotesByTitle controller called with case: {}", caseSensitive);
         return output;
     }
 }

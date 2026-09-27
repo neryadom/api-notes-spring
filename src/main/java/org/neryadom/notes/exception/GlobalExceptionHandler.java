@@ -20,4 +20,14 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(er, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorObject> handleIllegalArgument(IllegalArgumentException ex) {
+        ErrorObject er = new ErrorObject();
+        er.statusCode = HttpStatus.BAD_REQUEST.value();
+        er.errorMessage = "Check parameters for: " + ex.getMessage();
+        er.timestamp = new Date();
+
+        return new ResponseEntity<>(er, HttpStatus.BAD_REQUEST);
+    }
 }

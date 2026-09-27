@@ -31,7 +31,7 @@ public class NoteDao {
     public List<Note> getNotesByTitle(String title, boolean caseSensitivity) {
         ArrayList<Note> output = new ArrayList<>();
         for (Note n: this.storage) {
-            if (n.getTitle().contains(title) || (!caseSensitivity && n.getTitle().toLowerCase().contains(title))) {
+            if (n.getTitle().contains(title) || (!caseSensitivity && n.getTitle().toLowerCase().contains(title.toLowerCase()))) {
                 output.add(n);
             }
         }

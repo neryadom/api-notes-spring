@@ -1,5 +1,6 @@
 package org.neryadom.notes.service;
 
+import org.neryadom.notes.utils.*;
 import org.neryadom.notes.dao.NoteDao;
 import org.neryadom.notes.model.Note;
 import org.slf4j.Logger;
@@ -22,13 +23,13 @@ public class NoteService {
 
     public List<Note> getNotes(String title, Integer quantity, String caseSensitivity) {
         List<Note> output;
-        if (caseSensitivity.equalsIgnoreCase("false")) {
-            title = title.toLowerCase();
-        } else if (!caseSensitivity.equalsIgnoreCase("true")) {
-            throw new IllegalArgumentException("Case sensitivity needs to be either \"true\" or \"false\"");
+
+        if (!ParameterUtils.isValidCaseSensitivityParam(caseSensitivity)) {
+            throw new IllegalArgumentException("Case Sensitivity parameter, needs to be either \"true\" or \"false\"");
         }
+
         if (title != null) {
-            log.info("getNotesByTitle with title: {} and with quantity: {} and with case: {}", title, quantity, caseSensitivity);
+            log.info("getNotes calls -> getNotesByTitle");
             output = this.getNotesByTitle(title, caseSensitivity);
         } else {
             output = noteDao.getNotes(quantity);
@@ -37,13 +38,14 @@ public class NoteService {
     }
 
     public List<Note> getNotesByTitle(String title, String caseSensitivity) {
-        boolean cs = true;
-        if (caseSensitivity.equalsIgnoreCase("false")) {
-            cs = false;
-            title = title.toLowerCase();
-        } else if (!caseSensitivity.equalsIgnoreCase("true")) {
-            throw new IllegalArgumentException("Case sensitivity needs to be either \"true\" or \"false\"");
+        boolean cs;
+
+        if (!ParameterUtils.isValidCaseSensitivityParam(caseSensitivity)) {
+            throw new IllegalArgumentException("Case Sensitivity parameter, needs to be either \"true\" or \"false\"");
+        } else {
+            cs = ParameterUtils.convertCaseSensitiveParamToBoolean(caseSensitivity);
         }
+        log.info("getNotesByTitle with title: {} and with case: {}", title, caseSensitivity);
         return noteDao.getNotesByTitle(title, cs);
     }
 }

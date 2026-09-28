@@ -35,7 +35,12 @@ public class NoteDao {
                 output.add(n);
             }
         }
-        if (output.isEmpty()) throw new NoteNotFoundException("Could not find notes for title: " + title);
+//        if (output.isEmpty()) throw new NoteNotFoundException("Could not find notes for title: " + title);
         return output;
+    }
+
+    public boolean addNote(Note incomingNote) {
+        this.storage.add(incomingNote);
+        return true;
     }
 }

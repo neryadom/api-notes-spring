@@ -1,6 +1,8 @@
 package org.neryadom.notes.controller;
 
 import org.neryadom.notes.model.Note;
+import org.neryadom.notes.model.UserResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,4 +18,7 @@ public interface NoteControllerInterface {
     @GetMapping("/title")
     List<Note> getNotesByTitle(@RequestParam() String title,
                                @RequestParam(required = false, defaultValue = "true") String caseSensitive);
+
+    @PostMapping
+    ResponseEntity<UserResponse> addNote(@RequestBody() Note incomingNote);
 }

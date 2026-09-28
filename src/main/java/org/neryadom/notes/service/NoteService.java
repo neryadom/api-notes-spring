@@ -48,4 +48,8 @@ public class NoteService {
         log.info("getNotesByTitle with title: {} and with case: {}", title, caseSensitivity);
         return noteDao.getNotesByTitle(title, cs);
     }
+
+    public boolean addNote(Note incomingNote) {
+        return this.noteDao.addNote(incomingNote);
+    }
 }

@@ -52,4 +52,8 @@ public class NoteService {
     public boolean addNote(Note incomingNote) {
         return this.noteDao.addNote(incomingNote);
     }
+
+    public boolean deleteNoteById(String id) {
+        return noteDao.deleteNoteById(id);
+    }
 }

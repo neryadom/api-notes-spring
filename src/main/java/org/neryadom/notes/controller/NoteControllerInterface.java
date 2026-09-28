@@ -1,5 +1,7 @@
 package org.neryadom.notes.controller;
 
+import org.apache.catalina.User;
+import org.apache.coyote.Response;
 import org.neryadom.notes.model.Note;
 import org.neryadom.notes.model.UserResponse;
 import org.springframework.http.ResponseEntity;
@@ -21,4 +23,8 @@ public interface NoteControllerInterface {
 
     @PostMapping
     ResponseEntity<UserResponse> addNote(@RequestBody() Note incomingNote);
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<UserResponse> deleteNoteById(@RequestHeader("key") String key,
+                                                @PathVariable("id") String id);
 }

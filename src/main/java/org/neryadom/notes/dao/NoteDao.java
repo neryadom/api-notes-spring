@@ -43,4 +43,14 @@ public class NoteDao {
         this.storage.add(incomingNote);
         return true;
     }
+
+    public boolean deleteNoteById(String id) {
+        for (int i = 0; i < this.storage.size(); i++) { // completely unoptimal but too lazy rn to convert arraylist to hashmap
+            if (this.storage.get(i).getId().equals(id)) {
+                this.storage.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
 }

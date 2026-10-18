@@ -21,31 +21,21 @@ public class NoteService {
         this.noteDao = noteDao;
     }
 
-    public List<Note> getNotes(String title, Integer quantity, String caseSensitivity) {
+    public List<Note> getNotes(Integer quantity) {
         List<Note> output;
-
-        if (!ParameterUtils.isValidCaseSensitivityParam(caseSensitivity)) {
-            throw new IllegalArgumentException("Case Sensitivity parameter, needs to be either \"true\" or \"false\"");
-        }
-
-        if (title != null) {
-            log.info("getNotes calls -> getNotesByTitle");
-            output = this.getNotesByTitle(title, caseSensitivity);
-        } else {
-            output = noteDao.getNotes(quantity);
-        }
+        output = noteDao.getNotes(quantity);
         return output.subList(0, Math.min(quantity, output.size()));
     }
 
-    public List<Note> getNotesByTitle(String title, String caseSensitivity) {
+    public List<Note> getNotesByTitle(String title, String caseSensitive) {
         boolean cs;
 
-        if (!ParameterUtils.isValidCaseSensitivityParam(caseSensitivity)) {
-            throw new IllegalArgumentException("Case Sensitivity parameter, needs to be either \"true\" or \"false\"");
+        if (!ParameterUtils.isValidCaseSensitivityParam(caseSensitive)) {
+            throw new IllegalArgumentException("caseSensitive parameter needs to be either \"true\" or \"false\"");
         } else {
-            cs = ParameterUtils.convertCaseSensitiveParamToBoolean(caseSensitivity);
+            cs = ParameterUtils.convertCaseSensitiveParamToBoolean(caseSensitive);
         }
-        log.info("getNotesByTitle with title: {} and with case: {}", title, caseSensitivity);
+        log.info("getNotesByTitle with title: {} and with case: {}", title, caseSensitive);
         return noteDao.getNotesByTitle(title, cs);
     }
 

@@ -13,12 +13,10 @@ import java.util.List;
 public interface NoteControllerInterface {
 
     @GetMapping
-    List<Note> getNotes(@RequestParam(required=false) String title,
-                        @RequestParam(required=false, defaultValue="10") Integer quantity,
-                        @RequestParam(required=false, defaultValue="true") String caseSensitive);
+    List<Note> getNotes(@RequestParam(required=false, defaultValue="10") Integer quantity);
 
     @GetMapping("/title")
-    List<Note> getNotesByTitle(@RequestParam() String title,
+    List<Note> getNotesByTitle(@RequestParam(required=true) String title,
                                @RequestParam(required = false, defaultValue = "true") String caseSensitive);
 
     @PostMapping

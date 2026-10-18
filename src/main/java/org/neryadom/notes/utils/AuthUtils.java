@@ -3,7 +3,7 @@ package org.neryadom.notes.utils;
 import java.util.HashSet;
 import java.util.List;
 
-public class AuthUtil {
+public class AuthUtils {
 
     static HashSet<String> users = new HashSet<>(List.of("user_zero", "user_one"));
 

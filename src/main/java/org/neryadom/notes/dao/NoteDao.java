@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class NoteDao {
+public class NoteDao implements INoteDao{
 
     public List<Note> storage;
 
@@ -35,7 +35,6 @@ public class NoteDao {
                 output.add(n);
             }
         }
-//        if (output.isEmpty()) throw new NoteNotFoundException("Could not find notes for title: " + title);
         return output;
     }
 

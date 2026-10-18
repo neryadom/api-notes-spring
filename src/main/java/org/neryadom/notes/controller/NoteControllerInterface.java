@@ -13,16 +13,20 @@ import java.util.List;
 public interface NoteControllerInterface {
 
     @GetMapping
+    @ResponseBody
     List<Note> getNotes(@RequestParam(required=false, defaultValue="10") Integer quantity);
 
     @GetMapping("/title")
+    @ResponseBody
     List<Note> getNotesByTitle(@RequestParam(required=true) String title,
                                @RequestParam(required = false, defaultValue = "true") String caseSensitive);
 
     @PostMapping
+    @ResponseStatus
     ResponseEntity<UserResponse> addNote(@RequestBody() Note incomingNote);
 
     @DeleteMapping("/{id}")
+    @ResponseStatus
     ResponseEntity<UserResponse> deleteNoteById(@RequestHeader("key") String key,
                                                 @PathVariable("id") String id);
 }

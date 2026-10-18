@@ -35,7 +35,7 @@ public class NoteService {
         } else {
             cs = ParameterUtils.convertCaseSensitiveParamToBoolean(caseSensitive);
         }
-        log.info("getNotesByTitle with title: {} and with case: {}", title, caseSensitive);
+        log.debug("getNotesByTitle with title: {} and with case: {}", title, caseSensitive);
         return noteDao.getNotesByTitle(title, cs);
     }
 

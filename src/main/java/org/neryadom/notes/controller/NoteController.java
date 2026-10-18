@@ -28,7 +28,7 @@ public class NoteController implements NoteControllerInterface {
     public List<Note> getNotes(Integer quantity) {
         List<Note> output;
         output = noteService.getNotes(quantity);
-        log.info("method: GET, controller: /notes, quantity: {}", quantity);
+        log.debug("method: GET, controller: /notes, quantity: {}", quantity);
         return output;
     }
 
@@ -36,14 +36,14 @@ public class NoteController implements NoteControllerInterface {
     public List<Note> getNotesByTitle(String title, String caseSensitive) {
         List<Note> output;
         output = noteService.getNotesByTitle(title, caseSensitive);
-        log.info("method: GET, controller: /notes/{}, caseSensitive: {}", title, caseSensitive);
+        log.debug("method: GET, controller: /notes/{}, caseSensitive: {}", title, caseSensitive);
         return output;
     }
 
     @Override
     public ResponseEntity<UserResponse> addNote(Note incomingNote) {
         UserResponse ur;
-        log.info("method: POST, controller: /notes, size: {}", incomingNote.getId());
+        log.debug("method: POST, controller: /notes, size: {}", incomingNote.getId());
         boolean addSuccess = noteService.addNote(incomingNote);
         if (addSuccess) {
             ur = new UserResponse(HttpStatus.OK, "Note successfully added");
@@ -61,7 +61,7 @@ public class NoteController implements NoteControllerInterface {
             ur = new UserResponse(HttpStatus.UNAUTHORIZED, "Unauthorized");
             return new ResponseEntity<>(ur, HttpStatus.UNAUTHORIZED);
         }
-        log.info("method: DELETE, controller: /notes/{}", id);
+        log.debug("method: DELETE, controller: /notes/{}", id);
         boolean output = noteService.deleteNoteById(id);
         if (output) {
             ur = new UserResponse(HttpStatus.OK, "Deleted succesfully");

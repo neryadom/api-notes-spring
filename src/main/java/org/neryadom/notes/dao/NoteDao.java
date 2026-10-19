@@ -1,55 +1,64 @@
 package org.neryadom.notes.dao;
 
-import org.neryadom.notes.exception.NoteNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.neryadom.notes.model.Note;
+import org.neryadom.notes.repositories.NotesRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+@Slf4j
 @Component
 public class NoteDao implements INoteDao{
 
-    public List<Note> storage;
+    private final NotesRepository notesRepository;
 
-    public NoteDao() {
-        this.storage = new ArrayList<>();
-        storage.addAll(
-                List.of(
-                        new Note("Example Note", "Today is a good day"),
-                        new Note("No Content, just title"),
-                        new Note("Moving state out of a component into a file", "More to come..."),
-                        new Note("My takeaway from a few months of working at the university", "A lot of learning...")
-                )
-        );
+
+    public NoteDao(NotesRepository notesRepository) {
+        this.notesRepository = notesRepository;
+        // this.populate()
     }
 
     public List<Note> getNotes(Integer quantity) {
-        return this.storage.subList(0, Math.min(quantity, this.storage.size()));
+        return notesRepository.findAll();
     }
 
-    public List<Note> getNotesByTitle(String title, boolean caseSensitivity) {
-        ArrayList<Note> output = new ArrayList<>();
-        for (Note n: this.storage) {
-            if (n.getTitle().contains(title) || (!caseSensitivity && n.getTitle().toLowerCase().contains(title.toLowerCase()))) {
-                output.add(n);
-            }
+    public List<Note> getNotesByTitle(String title, boolean caseSensitive) {
+        if (caseSensitive) {
+            return this.notesRepository.findAllByTitleContaining(title);
+        } else {
+            return this.notesRepository.findAllByTitleContainingIgnoreCase(title);
         }
-        return output;
     }
 
     public boolean addNote(Note incomingNote) {
-        this.storage.add(incomingNote);
-        return true;
+        try {
+            this.notesRepository.save(incomingNote);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public boolean deleteNoteById(String id) {
-        for (int i = 0; i < this.storage.size(); i++) { // completely unoptimal but too lazy rn to convert arraylist to hashmap
-            if (this.storage.get(i).getId().equals(id)) {
-                this.storage.remove(i);
-                return true;
-            }
+    public boolean deleteNoteById(UUID id) {
+        try {
+            this.notesRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        return false;
+    }
+
+    private void populate() {
+        var storage = List.of(
+                new Note("Example Note", "Today is a good day"),
+                new Note("No Content, just title"),
+                new Note("Moving state out of a component into a file", "More to come..."),
+                new Note("My takeaway from a few months of working at the university", "A lot of learning...")
+        );
+        for (Note n: storage) {
+            this.addNote(n);
+        }
     }
 }

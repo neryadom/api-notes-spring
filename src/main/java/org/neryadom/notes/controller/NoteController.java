@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class NoteController implements NoteControllerInterface {
@@ -62,7 +63,7 @@ public class NoteController implements NoteControllerInterface {
             return new ResponseEntity<>(ur, HttpStatus.UNAUTHORIZED);
         }
         log.debug("method: DELETE, controller: /notes/{}", id);
-        boolean output = noteService.deleteNoteById(id);
+        boolean output = noteService.deleteNoteById(UUID.fromString(id));
         if (output) {
             ur = new UserResponse(HttpStatus.OK, "Deleted succesfully");
             return new ResponseEntity<>(ur, HttpStatus.OK);

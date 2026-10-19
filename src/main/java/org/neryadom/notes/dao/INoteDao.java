@@ -8,6 +8,6 @@ import java.util.UUID;
 public interface INoteDao {
     List<Note> getNotes(Integer quantity);
     List<Note> getNotesByTitle(String title, boolean caseSensitive);
-    boolean addNote(Note incomingNote) ;
+    UUID addNote(Note incomingNote) ;
     boolean deleteNoteById(UUID id);
 }

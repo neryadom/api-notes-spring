@@ -1,7 +1,5 @@
 package org.neryadom.notes.controller;
 
-import org.apache.catalina.User;
-import org.apache.coyote.Response;
 import org.neryadom.notes.model.Note;
 import org.neryadom.notes.model.UserResponse;
 import org.springframework.http.ResponseEntity;

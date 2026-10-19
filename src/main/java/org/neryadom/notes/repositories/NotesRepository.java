@@ -2,6 +2,7 @@ package org.neryadom.notes.repositories;
 
 
 import org.neryadom.notes.model.Note;
+import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -23,9 +23,7 @@ public class NoteService {
     }
 
     public List<Note> getNotes(Integer quantity) {
-        List<Note> output;
-        output = noteDao.getNotes(quantity);
-        return output.subList(0, Math.min(quantity, output.size()));
+        return noteDao.getNotes(quantity);
     }
 
     public List<Note> getNotesByTitle(String title, String caseSensitive) {
@@ -40,7 +38,7 @@ public class NoteService {
         return noteDao.getNotesByTitle(title, cs);
     }
 
-    public boolean addNote(Note incomingNote) {
+    public UUID addNote(Note incomingNote) {
         return this.noteDao.addNote(incomingNote);
     }
 

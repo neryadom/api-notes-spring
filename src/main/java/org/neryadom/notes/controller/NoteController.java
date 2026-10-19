@@ -45,14 +45,9 @@ public class NoteController implements NoteControllerInterface {
     public ResponseEntity<UserResponse> addNote(Note incomingNote) {
         UserResponse ur;
         log.debug("method: POST, controller: /notes, size: {}", incomingNote.getId());
-        boolean addSuccess = noteService.addNote(incomingNote);
-        if (addSuccess) {
-            ur = new UserResponse(HttpStatus.OK, "Note successfully added");
-            return new ResponseEntity<>(ur, HttpStatus.OK);
-        } else {
-            ur = new UserResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Note could not be added");
-            return new ResponseEntity<>(ur, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        UUID addUuid = noteService.addNote(incomingNote);
+        ur = new UserResponse(HttpStatus.OK, addUuid.toString());
+        return new ResponseEntity<>(ur, HttpStatus.OK);
     }
 
     @Override

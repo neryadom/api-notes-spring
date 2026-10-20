@@ -19,6 +19,10 @@ public interface NoteControllerInterface {
     List<Note> getNotesByTitle(@RequestParam(required=true) String title,
                                @RequestParam(required = false, defaultValue = "true") String caseSensitive);
 
+    @GetMapping("/{idString}")
+    @ResponseBody
+    Note getNoteById(@PathVariable String idString);
+
     @PostMapping
     @ResponseStatus
     ResponseEntity<UserResponse> addNote(@RequestBody() Note incomingNote);

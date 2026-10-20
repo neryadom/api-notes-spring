@@ -3,13 +3,11 @@ package org.neryadom.notes.dao;
 import lombok.extern.slf4j.Slf4j;
 import org.neryadom.notes.model.Note;
 import org.neryadom.notes.repositories.NotesRepository;
-import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -34,6 +32,10 @@ public class NoteDao implements INoteDao{
         } else {
             return this.notesRepository.findAllByTitleContainingIgnoreCase(title);
         }
+    }
+
+    public Optional<Note> getNoteById(UUID uuid) {
+        return this.notesRepository.findById(uuid);
     }
 
     public UUID addNote(Note incomingNote) {

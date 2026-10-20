@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -30,7 +31,7 @@ public class NoteService {
         boolean cs;
 
         if (!ParameterUtils.isValidCaseSensitivityParam(caseSensitive)) {
-            throw new IllegalArgumentException("caseSensitive parameter needs to be either \"true\" or \"false\"");
+            throw new IllegalArgumentException("caseSensitive - needs to be either \"true\" or \"false\"");
         } else {
             cs = ParameterUtils.convertCaseSensitiveParamToBoolean(caseSensitive);
         }
@@ -38,7 +39,20 @@ public class NoteService {
         return noteDao.getNotesByTitle(title, cs);
     }
 
+    public Optional<Note> getNoteById(String uuidString) {
+        UUID uuid;
+        try {
+            uuid = UUID.fromString(uuidString);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("idString");
+        }
+        return this.noteDao.getNoteById(uuid);
+    }
+
     public UUID addNote(Note incomingNote) {
+        int noteSize = incomingNote.getContent().getBytes().length;
+        incomingNote.setContentSize(noteSize);
+        log.info("createdNoteId: {}, createdNoteSize: {}B", incomingNote.getId(), incomingNote.getContentSize());
         return this.noteDao.addNote(incomingNote);
     }
 

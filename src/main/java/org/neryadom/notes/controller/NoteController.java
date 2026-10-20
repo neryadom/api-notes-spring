@@ -1,5 +1,6 @@
 package org.neryadom.notes.controller;
 
+import org.neryadom.notes.exception.NoteNotFoundException;
 import org.neryadom.notes.model.Note;
 import org.neryadom.notes.model.UserResponse;
 import org.neryadom.notes.service.NoteService;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -39,6 +41,16 @@ public class NoteController implements NoteControllerInterface {
         output = noteService.getNotesByTitle(title, caseSensitive);
         log.debug("method: GET, controller: /notes/{}, caseSensitive: {}", title, caseSensitive);
         return output;
+    }
+
+    @Override
+    public Note getNoteById(String idString) {
+        Optional<Note> output = noteService.getNoteById(idString);
+        if (output.isPresent()) {
+            return output.get();
+        } else {
+            throw new NoteNotFoundException(idString);
+        }
     }
 
     @Override
